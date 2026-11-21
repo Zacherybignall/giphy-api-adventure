@@ -79,25 +79,28 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 
 ## Build Order Breakdown
 
+## Notes and choices made
+1 No routes , using tabs . (going to fix , jsut had to get the ball rolling)
+
 ### 1. Set up the Next.js and TypeScript project with DaisyUI and page navigation
 1. Create the Next.js project with TypeScript enabled.
 2. Install and configure DaisyUI with Tailwind CSS.
 3. Create three page routes: about, GIF browser, and GitHub items.
-4. Build a shared navbar with links to all three pages.
+4. (X) Build a shared navbar with links to all three pages.
 5. Confirm navigation works between pages.
 
 ### 2. Build the About Me page with placeholder content
-1. Create the about route and link it from the navbar.
-2. Plan the page sections: header, tools, and adventures.
-3. Add the tools section with placeholder tools and reasons.
-4. Add the adventures section with three placeholder cards (photo, title, story).
+1. (X)Create the about route and link it from the navbar.
+2. (X) Plan the page sections: header, tools, and adventures.
+3. (X) Add the tools section with placeholder tools and reasons.
+4. (X) Add the adventures section with three placeholder cards (photo, title, story).
 5. Add the header with a placeholder name, intro line, and profile image.
-6. Check that the sections stack cleanly on a phone-sized screen.
+6. (X) Check that the sections stack cleanly on a phone-sized screen.
 
 ### 3. Build the GIF browser default view with three random GIFs
-1. Create a Giphy API key and store it in a typed config file.
-2. Define TypeScript types for Giphy GIF objects and responses.
-3. Build a function that calls the Giphy random endpoint three times.
+1. (X) Create a Giphy API key and store it in a typed config file.
+2. (X) Define TypeScript types for Giphy GIF objects and responses.
+3. (X) Build a function that calls the Giphy random endpoint three times.
 4. Display each GIF in a DaisyUI card with a skeleton while loading.
 5. Show a simple error message if the request fails.
 

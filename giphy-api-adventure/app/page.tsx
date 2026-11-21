@@ -5,9 +5,9 @@ import Github from "./pages/github";
 
 export default function Home() {
   return (
-    <div className="">
-      <div className="tabs tabs-lift">
-        <input type="radio" name="my_tabs_3" className="tab" aria-label="About Me" />
+    <div className="bg-base-300">
+      <div className="tabs tabs-lift justify-center">
+        <input type="radio" name="my_tabs_3" className="tab" aria-label="About" />
         <div className="tab-content bg-base-100 border-base-300 p-6"><About /></div>
 
         <input type="radio" name="my_tabs_3" className="tab" aria-label="Giphy" defaultChecked />
