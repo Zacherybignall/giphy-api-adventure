@@ -1,22 +1,24 @@
 'use client'
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Searchgif from "./utils/searchgif";
 import Get25ramgif from "./utils/get25ramgif";
 import { Paginationitems } from "../app/types/paginationitems";
 //function may need to change but starting point
-function Loadgif({searchtext}: { searchtext: string }) {
+function Loadgif({ searchtext }: { searchtext: string }) {
   if (searchtext != "") {
-    const pagei : Paginationitems = {limit :5,offset:0,total_count:0,count:0}
-     return (
+    const pagei: Paginationitems = { limit: 5, offset: 0, total_count: 0, count: 0 }
+    return (
       <div>
-        <Searchgif searchtext={searchtext} paginationitems={pagei}></Searchgif>
+        <Suspense fallback={<div>Loading...</div>}>
+          <Searchgif searchtext={searchtext} paginationitems={pagei}></Searchgif>
+        </Suspense>
       </div>
     );
   }
   else {
- 
+
     return (
-       <div>
+      <div>
         Type something in the searh bar to get started
       </div>
     );
@@ -24,16 +26,16 @@ function Loadgif({searchtext}: { searchtext: string }) {
 }
 export default function Giphy() {
   const [searchtext, setSearchtext] = useState("");
-  
-  
+
+
   return (
-    <div className="p-2">
+    <div className="p-2 flex items-center flex-col">
       <input
-          className="input"
-          value={searchtext}
-          onChange={e => setSearchtext(e.target.value)}
-        />
-    <Loadgif searchtext={searchtext}></Loadgif>
-  </div>
+        className="input"
+        value={searchtext}
+        onChange={e => setSearchtext(e.target.value)}
+      />
+      <Loadgif searchtext={searchtext}></Loadgif>
+    </div>
   )
 }

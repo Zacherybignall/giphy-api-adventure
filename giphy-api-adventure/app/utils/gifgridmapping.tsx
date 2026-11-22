@@ -21,8 +21,8 @@ export default function Gifgridmapping({
     count
 }: GifgridmappingProps) {
     return (
-        <div>
-            <div className="grid grid-cols-5">
+        <div className="flex items-center flex-col">
+            <div className="grid grid-cols-5 items-center">
                 {gifs.map((gif) => (
                     <div key={gif.id}>
                         <Gifloader gif={gif} />

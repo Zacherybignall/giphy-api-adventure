@@ -101,7 +101,7 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
     if (dataIsLoaded && (gifs.length !== 0)) {
 
         return (
-            <div className="gif-grid">
+            <div>
                 <Gifgridmapping
                     gifs={gifs}
                     hasPrev={offset > 0}

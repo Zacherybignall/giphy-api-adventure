@@ -22,8 +22,9 @@ export default function Urlsearch() {
     return (
         <div>
             <div>
-                <div className="flex justify-center glass rounded-selector ">How to use : Add "?q=" to the end of the URL followed by what you want to seatch for !</div>
+                <div className="flex justify-center glass rounded-selector ">How to use : Add "?q=" to the end of the URL followed by what you want to seatch for</div>
             </div>
+            {/* without get Error: Route "/gifs": Next.js encountered URL data `useSearchParams()` in a Client Component outside of `<Suspense>`. */}
             <Suspense fallback={<div>Loading...</div>}>
                 <UrlsearchContent />
             </Suspense>
