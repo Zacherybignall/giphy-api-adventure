@@ -9,8 +9,10 @@ export default function About() {
             <span>DaisyUI</span>
             <span>Tailwind</span>
             <span>Nextjs</span>
+            <span>React</span>  
+            <span>Eslint</span>
+            <span>Node</span>
             <span>SCALE</span>
-            <span>React</span>
           </span>
         </span>
       </div>

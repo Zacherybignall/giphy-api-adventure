@@ -2,14 +2,16 @@
 import { Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import Searchgif from "../utils/searchgif";
+import { Paginationitems } from "../types/paginationitems";
 
 function UrlsearchContent() {
     const searchParams = useSearchParams();
     const q = searchParams.get("q") ?? "";
     if (q != "") {
+        const pagei: Paginationitems = { limit: 5, offset: 0, total_count: 0, count: 0 }
         return (
             <div>
-                <Searchgif searchtext={q}></Searchgif>
+                <Searchgif searchtext={q} paginationitems={pagei}></Searchgif>
             </div>
         );
 

@@ -1,9 +1,10 @@
 //TODO: update to handle all GIF ewarch items , no need to have two
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Gif } from "../types/gif";
 import Gifgridmapping from "./gifgridmapping";
 import { debounce } from "es-toolkit";
 import { Paginationitems } from "../types/paginationitems";
+
 
 //since i render this page , have to have the inputs as props that are passed around
 interface SearchgifProps {
@@ -20,6 +21,9 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
     // current page, starts from the prop and changes when the buttons are clicked
     const [offset, setOffset] = useState(paginationitems.offset);
     const { limit } = paginationitems;
+    
+    //useRef is a React Hook that lets you reference a value that’s not needed for rendering.
+    const gifCache = useRef(new Map<string, Gif[]>());
 
     //useEffect is a React Hook that lets you synchronize a component with an external system.
     {/* dry (b/c i want to do the ramdom , which will need to reuse this)*/ }
@@ -28,10 +32,14 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
         let ignore = false;
         const controller = new AbortController();
 
+        // set up keys for this search 
+        const key = JSON.stringify([searchtext, limit, offset]);
+        const cachedGifs = gifCache.current.get(key);
+
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
             try {
-                const apiKey = process.env.GIPHY_API_KEY ?? "";
+                const apiKey = process.env.GIPHY_API_KEY ?? "Tpnn2BhpbUQHrskUMuJvPdxyehE7RuF8";
                 const params = new URLSearchParams({
                     api_key: apiKey,
                     q: searchtext,
@@ -52,9 +60,12 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
 
                 const result = await response.json();
                 if (!ignore) {
-                    setGifs(result.data);
+                    
                     setDataIsLoaded(true);
+                    gifCache.current.set(key, result.data);
+                    setGifs(result.data);
                     setTotalCount(result.pagination.total_count);
+                    
                 }
 
             } catch (err) {
@@ -73,7 +84,12 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
         };
         // haveing  [searchtext, offset, limit] allows the data to update and the funtion to update/re-run
     }, [searchtext, offset, limit]);
-    if (error) return <p>Error: {error}</p>;
+    if (error) return (
+        <div>
+            <p>Error: {error}</p>
+            <p>Please clear search bar and start again</p>
+        </div>
+    );
     //if (gifs.length === 0) return <p>Loading GIFs…</p>;
     if (!dataIsLoaded) {
         return (

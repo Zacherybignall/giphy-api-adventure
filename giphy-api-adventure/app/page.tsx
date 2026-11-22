@@ -6,7 +6,7 @@ import { Paginationitems } from "../app/types/paginationitems";
 //function may need to change but starting point
 function Loadgif({searchtext}: { searchtext: string }) {
   if (searchtext != "") {
-    const pagei : Paginationitems = {limit :3,offset:0,total_count:0,count:0}
+    const pagei : Paginationitems = {limit :5,offset:0,total_count:0,count:0}
      return (
       <div>
         <Searchgif searchtext={searchtext} paginationitems={pagei}></Searchgif>
@@ -14,10 +14,10 @@ function Loadgif({searchtext}: { searchtext: string }) {
     );
   }
   else {
-    // show trending , top 25 (for now)
+ 
     return (
-      <div>
-        <Get25ramgif></Get25ramgif>
+       <div>
+        Type something in the searh bar to get started
       </div>
     );
   }
