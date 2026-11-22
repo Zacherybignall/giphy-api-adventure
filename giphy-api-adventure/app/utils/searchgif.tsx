@@ -39,7 +39,7 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
             try {
-                const apiKey = process.env.GIPHY_API_KEY ?? "Tpnn2BhpbUQHrskUMuJvPdxyehE7RuF8";
+                const apiKey = process.env.GIPHY_API_KEY ?? "";
                 const params = new URLSearchParams({
                     api_key: apiKey,
                     q: searchtext,

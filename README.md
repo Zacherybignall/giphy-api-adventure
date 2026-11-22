@@ -8,25 +8,7 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 - React
 - TypeScript
 - DaisyUI
-- Giphy API
-- Local storage for favorites and saved search results
 
-
-## Requirements
-
-### Core
-- Users can search for GIFs using a clear search box.
-- Users can search by visiting a URL with a query parameter (for example, `/gifs?q=cats`).
-- Users can easily copy a GIF URL to paste into a chat program.
-
-### Nice to Have
-- The implementation uses TypeScript.
-- An alert is shown once a GIF URL is copied.
-- Results appear shortly after the user stops typing.
-- Users can cycle through many GIFs for each search query.
-- Users are alerted when the Giphy API limit is reached.
-- Users can still see previous results after the API limit is reached.
-- Users see three random GIFs before searching.
 
 ## Pages
 
