@@ -83,11 +83,11 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 1 No routes , using tabs . (going to fix , jsut had to get the ball rolling)
 
 ### 1. Set up the Next.js and TypeScript project with DaisyUI and page navigation
-1. Create the Next.js project with TypeScript enabled.
-2. Install and configure DaisyUI with Tailwind CSS.
-3. Create three page routes: about, GIF browser, and GitHub items.
+1. (X)Create the Next.js project with TypeScript enabled.
+2. (X)Install and configure DaisyUI with Tailwind CSS.
+3. (X)Create three page routes: about, GIF browser, and GitHub items.
 4. (X) Build a shared navbar with links to all three pages.
-5. Confirm navigation works between pages.
+5. (X)Confirm navigation works between pages.
 
 ### 2. Build the About Me page with placeholder content
 1. (X)Create the about route and link it from the navbar.
@@ -101,19 +101,19 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 1. (X) Create a Giphy API key and store it in a typed config file.
 2. (X) Define TypeScript types for Giphy GIF objects and responses.
 3. (X) Build a function that calls the Giphy random endpoint three times.
-4. Display each GIF in a DaisyUI card with a skeleton while loading.
+4. (x)Display each GIF in a DaisyUI card with a skeleton while loading.
 5. Show a simple error message if the request fails.
 
 ### 4. Add the search box and the three-character minimum
-1. Add a search input to the GIF browser page.
+1. (x)Add a search input to the GIF browser page.
 2. Show the random GIFs until the user has typed at least three characters.
 3. Clear the search and return to the random view when the box is emptied.
 
 ### 5. Add URL search with the q query parameter
-1. Read the `q` parameter from the URL when the page loads.
+1. (X)Read the `q` parameter from the URL when the page loads.
 2. Run the search automatically if `q` is present.
 3. Update the URL with `q` as the user searches, without reloading the page.
-4. Test that a shared link such as `/gifs?q=cats` shows the right results.
+4. (X)Test that a shared link such as `/gifs?q=cats` shows the right results.
 
 ### 6. Add fast results with debouncing and ignore outdated responses
 1. Debounce the input by about 300 milliseconds before calling the Giphy search endpoint.
@@ -127,10 +127,10 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 4. Show the current range of results, such as "Showing 1 to 12."
 
 ### 8. Add the copy button and toast alert
-1. Add a copy button to each GIF card.
-2. Copy the direct GIF URL with `navigator.clipboard.writeText()`.
-3. Show a DaisyUI toast with an alert that confirms the copy.
-4. Test pasting the link into a chat program to confirm the preview appears.
+1. (X)Add a copy button to each GIF card.
+2. (X)Copy the direct GIF URL with `navigator.clipboard.writeText()`.
+3. (X)Show a DaisyUI toast with an alert that confirms the copy.
+4. (X)Test pasting the link into a chat program to confirm the preview appears.
 
 ### 9. Add favorites with local storage
 1. Add a save button to each GIF card.

@@ -1,3 +1,5 @@
+// This was the POC to get things ready
+
 //idea is to test all items out then split where needed
 
 //feach data from : https://api.giphy.com/v1/gifs/trending?api_key=YOUR_API_KEY&limit=25&offset=0&rating=G&lang=en
@@ -50,11 +52,10 @@ export default function Cards() {
         }
 
         const result = await response.json();
-        console.log(result)
         setGifs(result.data);
 
       } catch (err) {
-        console.log(err)
+
       }
     }
 

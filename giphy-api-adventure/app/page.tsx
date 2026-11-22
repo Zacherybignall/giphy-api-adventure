@@ -1,6 +1,4 @@
-//GIPHY page placeholder
-// this is to be the default radom but all use giphy-api-adventure/giphy-api-adventure/app/utils/getgifUrl.tsx
-'use client';
+'use client'
 import { useState } from "react";
 import Searchgif from "./utils/searchgif";
 import Get25ramgif from "./utils/get25ramgif";
@@ -23,7 +21,8 @@ function Loadgif({searchtext}: { searchtext: string }) {
   }
 }
 export default function Giphy() {
-   const [searchtext, setSearchtext] = useState("");
+  const [searchtext, setSearchtext] = useState("");
+  
   
   return (
     <div className="p-2">

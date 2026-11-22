@@ -35,7 +35,7 @@ export default function Get25ramgif() {
 
                 const result = await response.json();
                 setDataIsLoaded(true)
-                console.log(result)
+
                 setGifs(result.data);
 
             } catch (err) {
@@ -55,8 +55,7 @@ export default function Get25ramgif() {
         );
     }
     if (dataIsLoaded && (gifs.length !== 0)) {
-        console.log(dataIsLoaded)
-        console.log(gifs)
+
         return (
             <div className="gif-grid">
                 <Gifgridmapping gifs={gifs}></Gifgridmapping>
