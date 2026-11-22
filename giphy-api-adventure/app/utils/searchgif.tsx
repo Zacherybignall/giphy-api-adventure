@@ -1,22 +1,25 @@
-
+//TODO: update to handle all GIF ewarch items , no need to have two
 import { useEffect, useState } from "react";
 import { Gif } from "../types/gif";
-import Gifloader from "./getgifUrl";
 import Gifgridmapping from "./gifgridmapping";
+import { debounce } from "es-toolkit";
 
-export default function Searchgif({searchtext}:{searchtext: string}) {
+export default function Searchgif({ searchtext }: { searchtext: string }) {
     const [gifs, setGifs] = useState<Gif[]>([]);
     const [error, setError] = useState("");
     const [dataIsLoaded, setDataIsLoaded] = useState(false);
 
     //useEffect is a React Hook that lets you synchronize a component with an external system.
     // copuld update to use axios library
-    {/* dry */}
+    {/* dry */ }
     useEffect(() => {
+        // th two stop old items from being pushed though.
+        let ignore = false;
+        const controller = new AbortController();
+        
         async function fetchGifs() {
             try {
-                //TODO: do not allow Key into Git , make this a .env item
-                const apiKey = "";
+                const apiKey = process.env.GIPHY_API_KEY ?? "";
                 const params = new URLSearchParams({
                     api_key: apiKey,
                     q: searchtext,
@@ -36,17 +39,27 @@ export default function Searchgif({searchtext}:{searchtext: string}) {
                 }
 
                 const result = await response.json();
-                setDataIsLoaded(true)
-
-                setGifs(result.data);
+                if (!ignore) {
+                    setGifs(result.data);
+                    setDataIsLoaded(true);
+                }
 
             } catch (err) {
-                console.log(err)
+                if (!ignore) setError(String(err));
             }
         }
 
-        fetchGifs();
-    }, []);
+        //waits 300 milliseconds before sending or re-sending a request out
+        const debouncedFetch = debounce(fetchGifs, 300);
+        debouncedFetch();
+
+        return () => {
+            ignore = true;
+            controller.abort();
+            debouncedFetch.cancel();
+        };
+        // haveing  [searchtext] allows the box to be udpated
+    }, [searchtext]);
     if (error) return <p>Error: {error}</p>;
     //if (gifs.length === 0) return <p>Loading GIFs…</p>;
     if (!dataIsLoaded) {
