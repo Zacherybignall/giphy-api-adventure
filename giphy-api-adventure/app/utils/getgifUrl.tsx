@@ -28,15 +28,19 @@ export default function Gifloader({ gif }: { gif: Gif }) {
       <div className="card">
         <div className="card-body">
           <div >
-            <img
-                onClick={() => copyText(gif.url)}
-                src={gif.images.fixed_width.url}
-                alt={gif.title || "Trending GIF"}
+            <video
+              onClick={() => copyText(gif.url)}
+              src={gif.images.original_mp4.mp4}
+              autoPlay
+              loop
+              muted
+              playsInline
+              aria-label={gif.title || "Trending GIF"}
             />
           </div>
         </div>
       </div>
-    {/*  This may need to be a custom hook or context  */}
+      {/*  This may need to be a custom hook or context  */}
       {showToast && (
         <div className="toast toast-top toast-center">
           <div className="alert alert-info">

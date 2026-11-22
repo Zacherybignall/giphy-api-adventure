@@ -6,5 +6,8 @@ export  type Gif = {
     fixed_width: {
       url: string;
     };
+    original_mp4:{
+      mp4:string;
+    }
   };
 };

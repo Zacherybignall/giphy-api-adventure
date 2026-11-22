@@ -3,28 +3,40 @@ import { useEffect, useState } from "react";
 import { Gif } from "../types/gif";
 import Gifgridmapping from "./gifgridmapping";
 import { debounce } from "es-toolkit";
+import { Paginationitems } from "../types/paginationitems";
 
-export default function Searchgif({ searchtext }: { searchtext: string }) {
+//since i render this page , have to have the inputs as props that are passed around
+interface SearchgifProps {
+    searchtext: string;
+    paginationitems: Paginationitems;
+}
+
+export default function Searchgif({ searchtext, paginationitems }: SearchgifProps) {
     const [gifs, setGifs] = useState<Gif[]>([]);
     const [error, setError] = useState("");
-    const [dataIsLoaded, setDataIsLoaded] = useState(false);
+    const [dataIsLoaded, setDataIsLoaded] = useState(false)
+
+    const [totalCount, setTotalCount] = useState(paginationitems.total_count);
+    // current page, starts from the prop and changes when the buttons are clicked
+    const [offset, setOffset] = useState(paginationitems.offset);
+    const { limit } = paginationitems;
 
     //useEffect is a React Hook that lets you synchronize a component with an external system.
-    // copuld update to use axios library
-    {/* dry */ }
+    {/* dry (b/c i want to do the ramdom , which will need to reuse this)*/ }
     useEffect(() => {
         // th two stop old items from being pushed though.
         let ignore = false;
         const controller = new AbortController();
-        
+
+        // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
             try {
                 const apiKey = process.env.GIPHY_API_KEY ?? "";
                 const params = new URLSearchParams({
                     api_key: apiKey,
                     q: searchtext,
-                    limit: "25",
-                    offset: "0",
+                    limit: limit.toString(),
+                    offset: offset.toString(),
                     rating: "G",
                     lang: "en",
                 });
@@ -42,6 +54,7 @@ export default function Searchgif({ searchtext }: { searchtext: string }) {
                 if (!ignore) {
                     setGifs(result.data);
                     setDataIsLoaded(true);
+                    setTotalCount(result.pagination.total_count);
                 }
 
             } catch (err) {
@@ -58,8 +71,8 @@ export default function Searchgif({ searchtext }: { searchtext: string }) {
             controller.abort();
             debouncedFetch.cancel();
         };
-        // haveing  [searchtext] allows the box to be udpated
-    }, [searchtext]);
+        // haveing  [searchtext, offset, limit] allows the data to update and the funtion to update/re-run
+    }, [searchtext, offset, limit]);
     if (error) return <p>Error: {error}</p>;
     //if (gifs.length === 0) return <p>Loading GIFs…</p>;
     if (!dataIsLoaded) {
@@ -73,7 +86,15 @@ export default function Searchgif({ searchtext }: { searchtext: string }) {
 
         return (
             <div className="gif-grid">
-                <Gifgridmapping gifs={gifs}></Gifgridmapping>
+                <Gifgridmapping
+                    gifs={gifs}
+                    hasPrev={offset > 0}
+                    hasNext={offset + limit < totalCount}
+                    onPrev={() => setOffset((o) => Math.max(0, o - limit))}
+                    onNext={() => setOffset((o) => o + limit)}
+                    count={offset}
+                    total={totalCount}
+                />
             </div>
         )
     }

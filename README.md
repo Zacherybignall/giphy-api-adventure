@@ -102,12 +102,12 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 2. (X) Define TypeScript types for Giphy GIF objects and responses.
 3. (X) Build a function that calls the Giphy random endpoint three times.
 4. (x)Display each GIF in a DaisyUI card with a skeleton while loading.
-5. Show a simple error message if the request fails.
+5. (x)Show a simple error message if the request fails.
 
 ### 4. Add the search box and the three-character minimum
-1. (x)Add a search input to the GIF browser page.
-2. Show the random GIFs until the user has typed at least three characters.
-3. Clear the search and return to the random view when the box is emptied.
+1. (X)Add a search input to the GIF browser page.
+2. (X)Show the random GIFs until the user has typed at least three characters.
+3. (X)Clear the search and return to the random view when the box is emptied.
 
 ### 5. Add URL search with the q query parameter
 1. (X)Read the `q` parameter from the URL when the page loads.
@@ -116,15 +116,15 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 4. (X)Test that a shared link such as `/gifs?q=cats` shows the right results.
 
 ### 6. Add fast results with debouncing and ignore outdated responses
-1. Debounce the input by about 300 milliseconds before calling the Giphy search endpoint.
-2. Track the latest query and discard responses for older queries.
-3. Test by typing quickly and confirming only the final query's results appear.
+1. (x)Debounce the input by about 300 milliseconds before calling the Giphy search endpoint.
+2. (x)Track the latest query and discard responses for older queries.
+3. (x)Test by typing quickly and confirming only the final query's results appear.
 
 ### 7. Add cycling through results with Previous and Next buttons
-1. Request results in pages using the `limit` and `offset` parameters.
-2. Add Previous and Next buttons using a DaisyUI join with btn.
+1. (x)Request results in pages using the `limit` and `offset` parameters.
+2. (x)Add Previous and Next buttons using a DaisyUI join with btn.
 3. Disable Previous on the first page and Next when no more results are available.
-4. Show the current range of results, such as "Showing 1 to 12."
+4. (x)Show the current range of results, such as "Showing 1 to 12."
 
 ### 8. Add the copy button and toast alert
 1. (X)Add a copy button to each GIF card.

@@ -2,12 +2,14 @@
 import { useState } from "react";
 import Searchgif from "./utils/searchgif";
 import Get25ramgif from "./utils/get25ramgif";
+import { Paginationitems } from "../app/types/paginationitems";
 //function may need to change but starting point
 function Loadgif({searchtext}: { searchtext: string }) {
   if (searchtext != "") {
+    const pagei : Paginationitems = {limit :3,offset:0,total_count:0,count:0}
      return (
       <div>
-        <Searchgif searchtext={searchtext}></Searchgif>
+        <Searchgif searchtext={searchtext} paginationitems={pagei}></Searchgif>
       </div>
     );
   }
