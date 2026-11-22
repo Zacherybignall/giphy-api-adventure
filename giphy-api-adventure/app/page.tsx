@@ -3,6 +3,7 @@ import { Suspense, useState } from "react";
 import Searchgif from "./utils/searchgif";
 import Get25ramgif from "./utils/get25ramgif";
 import { Paginationitems } from "../app/types/paginationitems";
+import Ramdomgif from "./utils/ramdomgif";
 //function may need to change but starting point
 function Loadgif({ searchtext }: { searchtext: string }) {
   if (searchtext != "") {
@@ -19,7 +20,10 @@ function Loadgif({ searchtext }: { searchtext: string }) {
 
     return (
       <div>
-        Type something in the searh bar to get started
+        <Suspense fallback={<div>Loading...</div>}>
+        <Ramdomgif></Ramdomgif>
+        </Suspense>
+        
       </div>
     );
   }
@@ -30,6 +34,7 @@ export default function Giphy() {
 
   return (
     <div className="p-2 flex items-center flex-col">
+      <div> Type something in the searh bar to get started</div>
       <input
         className="input"
         value={searchtext}

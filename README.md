@@ -114,7 +114,7 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 3. (X)Show a DaisyUI toast with an alert that confirms the copy.
 4. (X)Test pasting the link into a chat program to confirm the preview appears.
 
-### 9. Add favorites with local storage
+### (droped)9. Add favorites with local storage
 1. Add a save button to each GIF card.
 2. Store the GIF ID, title, and preview URL in local storage when saved.
 3. Load saved favorites on page load and show them in a favorites section.
@@ -127,7 +127,7 @@ This project is a personal portfolio website built with Next.js, React, TypeScri
 4. Limit how many queries are saved so local storage does not fill up.
 5. When the limit is reached, show saved results for the current query with a note that they may be out of date.
 
-### 11. Build the GitHub items page with a hardcoded list of selected repos
+### (droped)11. Build the GitHub items page with a hardcoded list of selected repos
 1. Choose the repositories to feature.
 2. Store their names, descriptions, languages, and links in a typed local data file.
 3. Display each repo in a DaisyUI card.
