@@ -49,11 +49,13 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
                     lang: "en",
                 });
                 // TODO: make this a .env item 
-                // random only returns one.
                 const response = await fetch(
                     `https://api.giphy.com/v1/gifs/search?${params}`
                 );
 
+                if (response.status === 429) {
+                    throw new Error("Too many requests. Please wait a moment and try again.");
+                }
                 if (!response.ok) {
                     throw new Error(`Request failed: ${response.status}`);
                 }
