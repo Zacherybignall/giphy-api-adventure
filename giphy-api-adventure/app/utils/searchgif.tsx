@@ -38,7 +38,8 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
 
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
-            const params = new URLSearchParams({
+           try{
+             const params = new URLSearchParams({
 
                 q: searchtext,
                 limit: limit.toString(),
@@ -52,7 +53,7 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
             if (!response.ok) {
                 // getting the json to the sever message , if it is a custom one
                 const body = await response.json();
-                setError(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
+                throw new Error(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
             }
 
             if (!ignore) {
@@ -62,6 +63,10 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
                 setGifs(datajson.data);
                 setTotalCount(datajson.pagination.total_count);
             }
+           } catch (error)
+           {
+            if (!ignore) setError(String(error));
+           }
         }
 
         //waits 300 milliseconds before sending or re-sending a request out
@@ -100,6 +105,7 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
                     onNext={() => setOffset((o) => o + limit)}
                     count={offset}
                     total={totalCount}
+                    hidenav={false}
                 />
             </div>
         )

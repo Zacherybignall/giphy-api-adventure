@@ -32,7 +32,7 @@ export async function GET(request: Request)
         );
     }
     if (!response.ok) {
-        throw new Error(`Request failed: ${response.status}`);
+        return  Response.json(response);
     }
     const result = await response.json();
     //This is returning a list and I need the count , split data on what calls it

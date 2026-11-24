@@ -2,8 +2,10 @@ export default function About() {
   return (
 
     <div>
+      
       <div className="p-85">
-        <h1>Tools used</h1>
+       <a className="link" href="https://github.com/Zacherybignall/giphy-api-adventure">Github Link</a>
+        <div>Tools used</div>
         <span className="text-rotate text-9xl">
           <span className="justify-items-center">
             <span>DaisyUI</span>

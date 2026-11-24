@@ -21,26 +21,30 @@ export default function Ramdomgif() {
         let ignore = false;
         const controller = new AbortController();
         async function fetchGifs() {
-            const response = await fetch("/api/random-gifs", {
-                signal: controller.signal,
-            });
-            if (!response.ok) {
-                // getting the json to the sever message , if it is a custom one 
-                const body = await response.json();
-                setError(body.error ??`Request failed: ${response.status}:${response.statusText}`)
-            }
+            try {
+                const response = await fetch("/api/random-gifs", {
+                    signal: controller.signal,
+                });
+                if (!response.ok) {
+                    // getting the json to the sever message , if it is a custom one 
+                    const body = await response.json();
+                    console.log(body)
+                    throw new Error(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
+                }
 
-            if (!ignore) {
-                const datajson = await response.json();
-                setDataIsLoaded(true);
-                setGifs(datajson);
-            }
+                if (!ignore) {
+                    const datajson = await response.json();
+                    setDataIsLoaded(true);
+                    setGifs(datajson);
+                }
+            } catch (error) {
+                setError(String(error))}
         }
         fetchGifs()
     }, []);
     if (error) return (
         <div>
-            <p>Error: {error}</p>
+            <p>Problem: {error}</p>
             <p>Please clear search bar and start again</p>
         </div>
     );
@@ -57,12 +61,13 @@ export default function Ramdomgif() {
             <div>
                 <Gifgridmapping
                     gifs={gifs}
-                    hasPrev={true}
-                    hasNext={true}
+                    hasPrev={false}
+                    hasNext={false}
                     onPrev={() => null}
                     onNext={() => null}
                     count={0}
-                    total={numberofRam}
+                    total={0}
+                    hidenav={true}
                 />
             </div>
         )

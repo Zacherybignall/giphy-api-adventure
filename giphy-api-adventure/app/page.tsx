@@ -1,5 +1,5 @@
 'use client'
-import { Suspense, useState } from "react";
+import { Suspense, useEffect, useState } from "react";
 import Searchgif from "./utils/searchgif";
 import { Paginationitems } from "../app/types/paginationitems";
 import Ramdomgif from "./utils/ramdomgif";
@@ -20,20 +20,25 @@ function Loadgif({ searchtext }: { searchtext: string }) {
     return (
       <div>
         <Suspense fallback={<div>Loading...</div>}>
-        <Ramdomgif></Ramdomgif>
+          <Ramdomgif></Ramdomgif>
         </Suspense>
-        
+
       </div>
     );
   }
 }
 export default function Giphy() {
-  const [searchtext, setSearchtext] = useState("");
+  const [searchtext, setSearchtext] = useState<string>("");
+  // Allows the window to render 
+  useEffect(() => {
+    const searchParams = new URL(window.location.href);
+    setSearchtext(searchParams.searchParams.get("q") ?? "");
+  }, []);
 
 
   return (
     <div className="p-2 flex items-center flex-col">
-      <div> Type something in the searh bar to get started</div>
+      <div> Type something in the searh bar to get started Or: Add "?q=" to the end of the URL followed by what you want to seatch for</div>
       <input
         className="input"
         value={searchtext}

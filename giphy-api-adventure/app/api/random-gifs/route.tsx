@@ -3,7 +3,7 @@ export  async function GET(
     const apiKey = process.env.GIPHY_API_KEY;
     const ramnumber: number = 5;
     if (!apiKey) {
-        return Response.json(
+        return  Response.json(
             { error: "GIPHY_API_KEY is not configured" },
             { status: 500}
         );

@@ -9,6 +9,7 @@ interface GifgridmappingProps {
     onNext: () => void;
     total: number;
     count: number;
+    hidenav: boolean
 }
 
 export default function Gifgridmapping({
@@ -18,7 +19,8 @@ export default function Gifgridmapping({
     onPrev,
     onNext,
     total,
-    count
+    count,
+    hidenav
 }: GifgridmappingProps) {
     return (
         <div className="flex items-center flex-col">
@@ -29,7 +31,7 @@ export default function Gifgridmapping({
                     </div>
                 ))}
             </div>
-            <div className="join">
+            <div className="join" hidden={hidenav}>
                 {/* on click is have onPrev |  onNext fun a fuynction on Searchgif to get the next set of items*/}
                 <button className="join-item btn" onClick={onPrev} disabled={!hasPrev}>«</button>
                 <button className="join-item btn btn-ghost">{count} out of {total}</button>
