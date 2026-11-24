@@ -9,16 +9,11 @@ export default function Ramdomgif() {
     const [gifs, setGifs] = useState<Gif[]>([]);
     const [error, setError] = useState<string>("");
     const [dataIsLoaded, setDataIsLoaded] = useState<boolean>(false)
-    const numberofRam: number = 5
 
-
-    //useRef is a React Hook that lets you reference a value that’s not needed for rendering.
-    const gifCache = useRef(new Map<string, Gif[]>());
-    const apiKey = process.env.GIPHY_API_KEY ?? "";
     //useEffect is a React Hook that lets you synchronize a component with an external system.
     useEffect(() => {
         // these two stop old items from being pushed though.
-        let ignore = false;
+        const ignore = false;
         const controller = new AbortController();
         async function fetchGifs() {
             try {

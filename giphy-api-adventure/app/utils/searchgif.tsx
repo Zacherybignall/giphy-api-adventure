@@ -34,7 +34,6 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
 
         // set up keys for this search 
         const key = JSON.stringify([searchtext, limit, offset]);
-        const cachedGifs = gifCache.current.get(key);
 
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
