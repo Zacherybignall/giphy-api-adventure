@@ -24,7 +24,7 @@ export default function Ramdomgif() {
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
             try {
-                const apiKey = process.env.GIPHY_API_KEY ?? "";
+                const apiKey ="";
                 const params = new URLSearchParams({
                     api_key: apiKey,
                     rating: "G",

@@ -38,7 +38,8 @@ export default function Giphy() {
 
   return (
     <div className="p-2 flex items-center flex-col">
-      <div> Type something in the searh bar to get started Or: Add "?q=" to the end of the URL followed by what you want to seatch for</div>
+      <div>Type something in the searh bar to get started Or: Add "?q=" to the end of the URL followed by what you want to seatch for</div>
+      <div>Click a GIF to copy it</div>
       <input
         className="input"
         value={searchtext}
