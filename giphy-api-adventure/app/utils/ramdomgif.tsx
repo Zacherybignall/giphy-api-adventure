@@ -9,33 +9,73 @@ export default function Ramdomgif() {
     const [gifs, setGifs] = useState<Gif[]>([]);
     const [error, setError] = useState<string>("");
     const [dataIsLoaded, setDataIsLoaded] = useState<boolean>(false)
-
+   
+    //useRef is a React Hook that lets you reference a value that’s not needed for rendering.
+    const gifCache = useRef(new Map<string, Gif[]>());
     //useEffect is a React Hook that lets you synchronize a component with an external system.
     useEffect(() => {
         // these two stop old items from being pushed though.
-        const ignore = false;
+        var ignore = false;
         const controller = new AbortController();
+        // set up keys for this search 
+        const key = JSON.stringify(Date.now());
+        const cachedGifs = gifCache.current.get(key);
+
+        // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
             try {
-                const response = await fetch("/api/random-gifs", {
-                    signal: controller.signal,
+                const apiKey = process.env.GIPHY_API_KEY ?? "";
+                const params = new URLSearchParams({
+                    api_key: apiKey,
+                    rating: "G",
+                    lang: "en",
                 });
-                if (!response.ok) {
-                    // getting the json to the sever message , if it is a custom one 
-                    const body = await response.json();
-                    console.log(body)
-                    throw new Error(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
+                const giflist3: Gif[] = [];
+                // This is a way for each request to make there own task.
+                const results = await Promise.all(
+                    Array.from({ length: 5 }, async () => {
+                        const response = await fetch(
+                            `https://api.giphy.com/v1/gifs/random?${params}`
+                        );
+
+                        if (response.status === 429) {
+                            throw new Error("Too many requests. Please wait a moment and try again.");
+                        }
+                        if (!response.ok) {
+                            throw new Error(`Request failed: ${response.status}`);
+                        }
+
+                        const result = await response.json();
+                        return result.data;
+                    })
+                );
+
+                // The "..." for each item to be pushed into  giflist3
+                if (!ignore) {
+                    giflist3.push(...results);
+                }
+                // Once I have more three load the data 
+                if (giflist3.length >= 3) {
+                    setDataIsLoaded(true);
+                    setGifs(giflist3);
+                    gifCache.current.set(key, giflist3);
                 }
 
-                if (!ignore) {
-                    const datajson = await response.json();
-                    setDataIsLoaded(true);
-                    setGifs(datajson);
-                }
-            } catch (error) {
-                setError(String(error))}
+            } catch (err) {
+                if (!ignore) setError(String(err));
+
+
+            }
         }
+
+        //waits 300 milliseconds before sending or re-sending a request out
         fetchGifs()
+
+        return () => {
+            ignore = true;
+            controller.abort();
+        };
+        // haveing  [searchtext, offset, limit] allows the data to update and the funtion to update/re-run
     }, []);
     if (error) return (
         <div>

@@ -37,35 +37,45 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
 
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
-           try{
-             const params = new URLSearchParams({
+            try {
+                const apiKey = "";
+                const params = new URLSearchParams({
+                    api_key: apiKey,
+                    q: searchtext,
+                    limit: limit.toString(),
+                    offset: offset.toString(),
+                    rating: "G",
+                    lang: "en",
+                });
+                // TODO: make this a .env item 
+                const response = await fetch(
+                    `https://api.giphy.com/v1/gifs/search?${params}`
+                );
 
-                q: searchtext,
-                limit: limit.toString(),
-                offset: offset.toString(),
+                if (response.status === 429) {
+                    throw new Error("Too many requests. Please wait a moment and try again.");
+                }
+                if (!response.ok) {
+                    throw new Error(`Request failed: ${response.status}`);
+                }
 
-            });
-            const response = await fetch(`/api/searchgif?${params}`, {
-                signal: controller.signal,
-            });
+                const result = await response.json();
+                if (!ignore) {
 
-            if (!response.ok) {
-                // getting the json to the sever message , if it is a custom one
-                const body = await response.json();
-                throw new Error(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
+                    setDataIsLoaded(true);
+                    gifCache.current.set(key, result.data);
+                    setGifs(result.data);
+                    setTotalCount(result.pagination.total_count);
+
+                }
+
+            } catch (err) {
+                if (!ignore) setError(String(err));
+
+
+
+
             }
-
-            if (!ignore) {
-                const datajson = await response.json();
-                setDataIsLoaded(true);
-                gifCache.current.set(key, datajson.data);
-                setGifs(datajson.data);
-                setTotalCount(datajson.pagination.total_count);
-            }
-           } catch (error)
-           {
-            if (!ignore) setError(String(error));
-           }
         }
 
         //waits 300 milliseconds before sending or re-sending a request out
