@@ -1,12 +1,17 @@
 'use client'
-import { Suspense } from "react";
-import { useSearchParams } from "next/navigation";
+import { Suspense, useEffect, useState } from "react";
 import Searchgif from "../utils/searchgif";
 import { Paginationitems } from "../types/paginationitems";
 
 function UrlsearchContent() {
-    const searchParams = useSearchParams();
-    const q = searchParams.get("q") ?? "";
+
+    const [q, setQ] = useState<string>("");
+    // Allows the window to render 
+    useEffect(() => {
+        const searchParams = new URL(window.location.href);
+        setQ(searchParams.searchParams.get("q") ?? "");
+
+    }, []);
     if (q != "") {
         const pagen: Paginationitems = { limit: 5, offset: 0, total_count: 0, count: 0 }
         return (

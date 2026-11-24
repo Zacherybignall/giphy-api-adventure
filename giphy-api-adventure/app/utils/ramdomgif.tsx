@@ -7,8 +7,8 @@ import Gifgridmapping from "./gifgridmapping";
 
 export default function Ramdomgif() {
     const [gifs, setGifs] = useState<Gif[]>([]);
-    const [error, setError] = useState("");
-    const [dataIsLoaded, setDataIsLoaded] = useState(false)
+    const [error, setError] = useState<string>("");
+    const [dataIsLoaded, setDataIsLoaded] = useState<boolean>(false)
     const numberofRam: number = 5
 
 

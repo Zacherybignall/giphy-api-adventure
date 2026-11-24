@@ -14,12 +14,12 @@ interface SearchgifProps {
 
 export default function Searchgif({ searchtext, paginationitems }: SearchgifProps) {
     const [gifs, setGifs] = useState<Gif[]>([]);
-    const [error, setError] = useState("");
-    const [dataIsLoaded, setDataIsLoaded] = useState(false)
+    const [error, setError] = useState<string>("");
+    const [dataIsLoaded, setDataIsLoaded] = useState<boolean>(false)
 
-    const [totalCount, setTotalCount] = useState(paginationitems.total_count);
+    const [totalCount, setTotalCount] = useState<number>(paginationitems.total_count);
     // current page, starts from the prop and changes when the buttons are clicked
-    const [offset, setOffset] = useState(paginationitems.offset);
+    const [offset, setOffset] = useState<number>(paginationitems.offset);
     const { limit } = paginationitems;
 
     //useRef is a React Hook that lets you reference a value that’s not needed for rendering.

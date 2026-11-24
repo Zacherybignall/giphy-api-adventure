@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from "react";
 import { Gif } from "../types/gif";
 
 export default function Gifloader({ gif }: { gif: Gif }) {
-  const [showToast, setShowToast] = useState(false);
+  const [showToast, setShowToast] = useState<boolean>(false);
   const timerRef = useRef<number | undefined>(undefined);
 
   // Clear any pending timer if the component unmounts
