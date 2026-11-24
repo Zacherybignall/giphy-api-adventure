@@ -2,7 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { Gif } from "../types/gif";
 import Gifgridmapping from "./gifgridmapping";
-import { debounce } from "es-toolkit";
+
 
 
 export default function Ramdomgif() {
@@ -14,71 +14,29 @@ export default function Ramdomgif() {
 
     //useRef is a React Hook that lets you reference a value that’s not needed for rendering.
     const gifCache = useRef(new Map<string, Gif[]>());
-
+    const apiKey = process.env.GIPHY_API_KEY ?? "";
     //useEffect is a React Hook that lets you synchronize a component with an external system.
-    {/* dry (b/c i want to do the ramdom , which will need to reuse this)*/ }
     useEffect(() => {
-        // th two stop old items from being pushed though.
+        // these two stop old items from being pushed though.
         let ignore = false;
         const controller = new AbortController();
-
-        // set up keys for this search 
-        const key = JSON.stringify(Date.now());
-        const cachedGifs = gifCache.current.get(key);
-
-        // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
-            try {
-                const apiKey = process.env.GIPHY_API_KEY ?? "";
-                const params = new URLSearchParams({
-                    api_key: apiKey,
-                    rating: "G",
-                    lang: "en",
-                });
-                const giflist3: Gif[] = [];
-                // This is a way for each request to make there own task.
-                const results = await Promise.all(
-                    Array.from({ length: numberofRam }, async () => {
-                        const response = await fetch(
-                            `https://api.giphy.com/v1/gifs/random?${params}`
-                        );
+            const response = await fetch("/api/random-gifs", {
+                signal: controller.signal,
+            });
+            if (!response.ok) {
+                // getting the json to the sever message , if it is a custom one 
+                const body = await response.json();
+                setError(body.error ??`Request failed: ${response.status}:${response.statusText}`)
+            }
 
-                        if (response.status === 429) {
-                            throw new Error("Too many requests. Please wait a moment and try again.");
-                        }
-                        if (!response.ok) {
-                            throw new Error(`Request failed: ${response.status}`);
-                        }
-
-                        const result = await response.json();
-                        return result.data;
-                    })
-                );
-
-                // The "..." for each item to be pushed into  giflist3
-                if (!ignore) {
-                    giflist3.push(...results);
-                }
-                // Once I have more three load the data 
-                if (giflist3.length >= 3) {
-                    setDataIsLoaded(true);
-                    setGifs(giflist3);
-                    gifCache.current.set(key, giflist3);
-                }
-
-            } catch (err) {
-                if (!ignore) setError(String(err));
+            if (!ignore) {
+                const datajson = await response.json();
+                setDataIsLoaded(true);
+                setGifs(datajson);
             }
         }
-
-        //waits 300 milliseconds before sending or re-sending a request out
         fetchGifs()
-
-        return () => {
-            ignore = true;
-            controller.abort();
-        };
-        // haveing  [searchtext, offset, limit] allows the data to update and the funtion to update/re-run
     }, []);
     if (error) return (
         <div>
@@ -94,8 +52,7 @@ export default function Ramdomgif() {
             </div>
         );
     }
-    if (dataIsLoaded && (gifs.length >= 0)) {
-
+    if (dataIsLoaded && (gifs.length >= 3)) {
         return (
             <div>
                 <Gifgridmapping

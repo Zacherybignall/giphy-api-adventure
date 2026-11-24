@@ -1,7 +1,6 @@
 'use client'
 import { Suspense, useState } from "react";
 import Searchgif from "./utils/searchgif";
-import Get25ramgif from "./utils/get25ramgif";
 import { Paginationitems } from "../app/types/paginationitems";
 import Ramdomgif from "./utils/ramdomgif";
 //function may need to change but starting point

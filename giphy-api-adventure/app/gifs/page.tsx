@@ -8,10 +8,10 @@ function UrlsearchContent() {
     const searchParams = useSearchParams();
     const q = searchParams.get("q") ?? "";
     if (q != "") {
-        const pagei: Paginationitems = { limit: 5, offset: 0, total_count: 0, count: 0 }
+        const pagen: Paginationitems = { limit: 5, offset: 0, total_count: 0, count: 0 }
         return (
             <div>
-                <Searchgif searchtext={q} paginationitems={pagei}></Searchgif>
+                <Searchgif searchtext={q} paginationitems={pagen}></Searchgif>
             </div>
         );
 

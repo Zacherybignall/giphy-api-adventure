@@ -21,7 +21,7 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
     // current page, starts from the prop and changes when the buttons are clicked
     const [offset, setOffset] = useState(paginationitems.offset);
     const { limit } = paginationitems;
-    
+
     //useRef is a React Hook that lets you reference a value that’s not needed for rendering.
     const gifCache = useRef(new Map<string, Gif[]>());
 
@@ -38,40 +38,29 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
 
         // fetchGifs can use the outer values no need to pass in paginationitems
         async function fetchGifs() {
-            try {
-                const apiKey = process.env.GIPHY_API_KEY ?? "";
-                const params = new URLSearchParams({
-                    api_key: apiKey,
-                    q: searchtext,
-                    limit: limit.toString(),
-                    offset: offset.toString(),
-                    rating: "G",
-                    lang: "en",
-                });
-                // TODO: make this a .env item 
-                const response = await fetch(
-                    `https://api.giphy.com/v1/gifs/search?${params}`
-                );
+            const params = new URLSearchParams({
 
-                if (response.status === 429) {
-                    throw new Error("Too many requests. Please wait a moment and try again.");
-                }
-                if (!response.ok) {
-                    throw new Error(`Request failed: ${response.status}`);
-                }
+                q: searchtext,
+                limit: limit.toString(),
+                offset: offset.toString(),
 
-                const result = await response.json();
-                if (!ignore) {
-                    
-                    setDataIsLoaded(true);
-                    gifCache.current.set(key, result.data);
-                    setGifs(result.data);
-                    setTotalCount(result.pagination.total_count);
-                    
-                }
+            });
+            const response = await fetch(`/api/searchgif?${params}`, {
+                signal: controller.signal,
+            });
 
-            } catch (err) {
-                if (!ignore) setError(String(err));
+            if (!response.ok) {
+                // getting the json to the sever message , if it is a custom one
+                const body = await response.json();
+                setError(body.error ?? `Request failed: ${response.status}:${response.statusText}`)
+            }
+
+            if (!ignore) {
+                const datajson = await response.json();
+                setDataIsLoaded(true);
+                gifCache.current.set(key, datajson.data);
+                setGifs(datajson.data);
+                setTotalCount(datajson.pagination.total_count);
             }
         }
 
@@ -101,7 +90,6 @@ export default function Searchgif({ searchtext, paginationitems }: SearchgifProp
         );
     }
     if (dataIsLoaded && (gifs.length !== 0)) {
-
         return (
             <div>
                 <Gifgridmapping
